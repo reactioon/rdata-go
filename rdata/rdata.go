@@ -71,7 +71,7 @@ func (c CONN) Send(cmd string) string {
 	ncmd := cmd + "\n"
 
 	_, err = c.Connection.Write([]byte(ncmd))
-	buffer = make([]byte, 1024)
+	buffer = make([]byte, 18024)
 	buffetLength, err = c.Connection.Read(buffer)
 
 	if err != nil {
