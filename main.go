@@ -17,14 +17,14 @@ var (
 
 func main() {
 
-	host := "192.168.1.210"
-	// host := "192.168.1.202"
+	// host := "192.168.1.210"
+	host := "192.168.1.202"
 	port := "60162"
 
 	client := rdata.CLIENT{}
 	loader := client.Load(host, port)
 
-	GetMultiples(loader)
+	ListMultiples(loader)
 
 }
 
@@ -82,6 +82,42 @@ func GetMultiples(loader rdata.CLIENT) {
 
 	fmt.Println("Executed GET", i, "times")
 	fmt.Println("Time elapsed: ", elapsed)
+	fmt.Println("Done!")
+
+}
+
+func ListMultiples(loader rdata.CLIENT) {
+
+	// dateNow := time.Now()
+
+	conn := loader.Connect()
+	defer conn.Close()
+	
+	// Qty := 100000
+	// Qty := 10000
+	// Qty := 1000
+	// Qty := 100
+	Qty := 100
+
+	var i int
+	for i=0; i < Qty; i++ {
+
+		dateNow := time.Now()
+		// _ = conn.Send(`route=collection.books.documents.list&collection=test&book=users&limit=50&meta=1`)
+		_ = conn.Send(`route=core.metrics`)
+		// _ = conn.Send(`route=collection.metrics&collection=test`)
+		// _ = conn.Send(`route=collection.books.metrics&collection=test&book=users`)
+
+		// _ = loader.Connect().Send(`route=core.metrics`)
+		// go loader.Connect().Send(`route=core.metrics`)
+
+		elapsed := fmt.Sprintf("%s", time.Since(dateNow))
+		fmt.Println(elapsed)
+
+		// time.Sleep(1 * time.Second)
+
+	}
+
 	fmt.Println("Done!")
 
 }

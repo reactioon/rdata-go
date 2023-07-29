@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"net"
+	"strings"
 
 )
 
@@ -71,14 +72,14 @@ func (c CONN) Send(cmd string) string {
 	ncmd := cmd + "\n"
 
 	_, err = c.Connection.Write([]byte(ncmd))
-	buffer = make([]byte, 18024)
+	buffer = make([]byte, 10048 * 1024)
 	buffetLength, err = c.Connection.Read(buffer)
 
 	if err != nil {
 		fmt.Println("Error reading:", err.Error())
 	}
 
-	answer := string(buffer[:buffetLength])
+	answer := strings.TrimSpace(string(buffer[:buffetLength]))
 
 	buffer = buffer[:0]
 
