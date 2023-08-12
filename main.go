@@ -97,18 +97,19 @@ func ListMultiples(loader rdata.CLIENT) {
 	// Qty := 10000
 	// Qty := 1000
 	// Qty := 100
-	Qty := 100
+	// Qty := 50
 
-	var i int
-	for i=0; i < Qty; i++ {
+	// var i int
+	// for i=0; i < Qty; i++ {
 
 		dateNow := time.Now()
-		// _ = conn.Send(`route=collection.books.documents.list&collection=test&book=users&limit=50&meta=1`)
-		_ = conn.Send(`route=core.metrics`)
+		_ = conn.Send(`route=collection.books.documents.list&collection=test&book=users&limit=50&meta=1`)
+		// _ = conn.Send(`route=core.metrics`)
 		// _ = conn.Send(`route=collection.metrics&collection=test`)
 		// _ = conn.Send(`route=collection.books.metrics&collection=test&book=users`)
 
 		// _ = loader.Connect().Send(`route=core.metrics`)
+		// _ = loader.Connect().Send(`route=about`)
 		// go loader.Connect().Send(`route=core.metrics`)
 
 		elapsed := fmt.Sprintf("%s", time.Since(dateNow))
@@ -116,7 +117,7 @@ func ListMultiples(loader rdata.CLIENT) {
 
 		// time.Sleep(1 * time.Second)
 
-	}
+	// }
 
 	fmt.Println("Done!")
 

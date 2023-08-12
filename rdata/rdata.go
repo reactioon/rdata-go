@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"net"
-	"strings"
+
 
 )
 
@@ -68,22 +68,24 @@ func (c CLIENT) Connect() CONN {
 }
 
 func (c CONN) Send(cmd string) string {
-	
+
 	ncmd := cmd + "\n"
+	_,_ = c.Connection.Write([]byte(ncmd))
 
-	_, err = c.Connection.Write([]byte(ncmd))
-	buffer = make([]byte, 10048 * 1024)
-	buffetLength, err = c.Connection.Read(buffer)
+	buf := make([]byte, 0, 4096)
+    tmp := make([]byte, 256)
+    for {
 
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
-	}
+        n,_ := c.Connection.Read(tmp)
+        buf = append(buf, tmp[:n]...)
 
-	answer := strings.TrimSpace(string(buffer[:buffetLength]))
+		if tmp[n-1] == 10 {
+			break;
+		}
 
-	buffer = buffer[:0]
-
-	return answer
+    }
+	
+	return string(buf)
 
 }
 
